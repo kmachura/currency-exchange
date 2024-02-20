@@ -9,17 +9,18 @@ export class CurrencyService {
   async getExchangeRate(
     currencyShortcut: string,
   ): Promise<ExchangedCurrencyDto> {
-    const url = `http://api.nbp.pl/api/exchangerates/rates/A/${currencyShortcut}/`;
+    console.log(currencyShortcut);
+    const link: string = '';
+    const url = link.concat('http://api.nbp.pl/api/exchangerates/rates/A/',currencyShortcut,'/');
 
     try {
       const response = await axios.get<ExchangedCurrencyDto>(url);
       const currency = response.data;
-      this.logger.log(currency.toString());
       return currency as ExchangedCurrencyDto;
     } catch (error) {
       this.logger.error(`Failed to fetch exchange rate for
 ${currencyShortcut}: ${error.message}`);
-      throw new Error(`Failed to fetch exchange rate for ${currencyShortcut}`);
+      throw new Error(`Failed to fetch exchange rate for: ` + currencyShortcut);
     }
   }
 }

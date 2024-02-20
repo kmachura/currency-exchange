@@ -6,6 +6,8 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { CreateExchangeDto } from '../dto/create-exchange.dto';
 import { Exchange } from '../entities/exchange.entity';
+import {CurrencyService} from "../currency/currency.service";
+import {ExchangedCurrencyDto} from "../dto/exchanged-currency.dto";
 
 @Injectable()
 export class UsersService {
@@ -13,6 +15,7 @@ export class UsersService {
 
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    private readonly currencyService: CurrencyService
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<CreateUserDto> {
@@ -54,6 +57,14 @@ export class UsersService {
     const updateUserDto = new UpdateUserDto();
     const exchangeModel = new Model<Exchange>();
     updateUserDto.exchange = new exchangeModel(createExchangeDto);
+    updateUserDto.exchange.dateAndTime = Date();
+
+    const exchangedRate: ExchangedCurrencyDto = await this.currencyService.getExchangeRate(createExchangeDto.chosenCurrency);
+    const rate: number = exchangedRate.rates[0].mid;
+    updateUserDto.exchange.exchangedAmount = createExchangeDto.amountToExchange * rate;
+    console.log(updateUserDto);
+    console.log(exchangedRate);
+    console.log(rate);
     return this.userModel.findByIdAndUpdate(id, updateUserDto);
   }
 

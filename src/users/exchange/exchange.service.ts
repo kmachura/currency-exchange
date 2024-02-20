@@ -15,10 +15,10 @@ export class ExchangeService {
   ) {
     const rate = this.currencyService.getExchangeRate(toCurrencyShortcut);
     const exchangedAmount: number = 123;
-    user.exchange.exchangeAmount = exchangedAmount;
+    user.exchange.exchangedAmount = exchangedAmount;
     user.exchange.amountToExchange = amountToChange;
     user.exchange.rate = Number((await rate).rates.mid);
-    user.exchange.dateAndTime = new Date();
+    user.exchange.dateAndTime = Date();
     return user;
   }
 }

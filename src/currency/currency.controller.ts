@@ -6,10 +6,11 @@ import { ExchangedCurrencyDto } from '../dto/exchanged-currency.dto';
 export class CurrencyController {
   constructor(private readonly currencyService: CurrencyService) {}
 
-  @Get('rate')
+  @Get('rate/:currencyShortcut')
   async getUSDExchangeRate(
     @Param('currencyShortcut') currencyShortcut: string,
   ): Promise<ExchangedCurrencyDto> {
+    console.log(currencyShortcut);
     return await this.currencyService.getExchangeRate(currencyShortcut);
   }
 }

@@ -1,13 +1,11 @@
 export class Exchange {
-  dateAndTime: Date;
-
-  initialCurrency: string;
+  dateAndTime: string;
 
   chosenCurrency: string;
 
   amountToExchange: number;
 
-  exchangeAmount: number;
+  exchangedAmount: number;
 
   rate: number;
 }

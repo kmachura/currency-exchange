@@ -21,7 +21,7 @@ export class UsersController {
     await this.usersService.create(createUserDto);
   }
 
-  @Post('exchange')
+  @Post('exchange/:id')
   async exchange(
     @Param('id') id: string,
     @Body() createExchangeDto: CreateExchangeDto,
